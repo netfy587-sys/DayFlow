@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside the Cage — Understanding Mixed Martial Arts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite: #1d1c1a;
+    --steel:    #34322e;
+    --bone:     #ece7dd;
+    --bone-2:   #ddd6c7;
+    --rust:     #c1541f;
+    --rust-2:   #e07a3f;
+    --slate:    #6f6a5e;
+    --max: 1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color: var(--graphite);
+    background: var(--bone);
+    line-height:1.6;
+    font-size:17px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color: var(--graphite);
+  }
+  .display{ font-family:'Archivo Black', sans-serif; font-weight:400; }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+  .wrap{ max-width: var(--max); margin:0 auto; padding:0 28px; }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position: sticky; top:0; z-index:50;
+    background: var(--bone); border-bottom: 1px solid var(--bone-2);
+  }
+  .navbar{
+    max-width: var(--max); margin:0 auto; padding: 16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:'Archivo Black', sans-serif; font-size:1.05rem;
+    color: var(--graphite); display:flex; align-items:center; gap:9px;
+  }
+  .brand .mark{ width:10px; height:10px; background: var(--rust); }
+  nav.links{ display:flex; gap: 26px; }
+  nav.links a{
+    color: var(--slate); text-decoration:none; font-size:0.88rem; font-weight:500;
+    padding: 4px 2px; border-bottom: 2px solid transparent; transition: border-color .2s, color .2s;
+  }
+  nav.links a:hover{ color: var(--graphite); border-color: var(--rust); }
+  .nav-toggle{ display:none; background:none; border:none; color:var(--graphite); font-size:1.6rem; cursor:pointer; }
+
+  /* ---------- HERO — split screen, image on the right ---------- */
+  .hero{
+    display:grid; grid-template-columns: 1.05fr 0.95fr; min-height: 90vh;
+    background: var(--graphite);
+  }
+  .hero-text{
+    display:flex; flex-direction:column; justify-content:center;
+    padding: 60px 56px; color: var(--bone);
+  }
+  .hero-kicker{
+    color: var(--rust-2); font-weight:600; font-size:0.82rem; letter-spacing:0.1em; margin-bottom:20px;
+  }
+  .hero h1{
+    color:#fff; font-size: clamp(2.6rem, 5vw, 4.2rem); line-height:1.02;
+  }
+  .hero-sub{ color:#c9c2b2; max-width: 480px; margin-top:24px; font-size:1.05rem; }
+  .hero-figures{
+    display:flex; gap:0; margin-top: 48px; border-top:1px solid rgba(236,231,221,0.2);
+  }
+  .hero-figures div{ flex:1; padding: 18px 20px 0 0; }
+  .hero-figures .num{ font-family:'Archivo Black',sans-serif; color:var(--rust-2); font-size:1.9rem; }
+  .hero-figures .label{ color:#a49c88; font-size:0.76rem; margin-top:4px; }
+  .hero-img{ position:relative; overflow:hidden; }
+  .hero-img img{ width:100%; height:100%; object-fit:cover; object-position: center 30%; }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{ padding: 96px 0; }
+  .section-head{ max-width: 640px; margin-bottom: 46px; }
+  .section-head .tag{
+    color: var(--rust); font-weight:600; font-size:0.78rem; letter-spacing:0.08em; margin-bottom:12px; display:block;
+  }
+  .section-head h2{ font-size: clamp(2rem, 4.5vw, 2.8rem); }
+  .lede{ font-size:1.1rem; color:#3d392f; max-width: 600px; }
+  p.body-text{ max-width: 580px; color:#4a4638; }
+  p + p.body-text{ margin-top:14px; }
+
+  /* ---------- INTRO ---------- */
+  .intro{ background: var(--bone); }
+  .intro-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap:60px; align-items:start; }
+
+  /* ---------- DISCIPLINES — the signature section: 5-up grid of blended arts ---------- */
+  .disciplines{ background: var(--steel); color: var(--bone); }
+  .disciplines .section-head h2{ color:#fff; }
+  .disciplines .lede{ color:#c9c2b2; }
+  .disc-grid{
+    margin-top: 48px; display:grid; grid-template-columns: repeat(5, 1fr); gap:1px; background: rgba(236,231,221,0.15);
+  }
+  .disc-card{ background: var(--steel); padding: 30px 20px; min-height:180px; display:flex; flex-direction:column; justify-content:space-between; }
+  .disc-card .d-name{ font-family:'Archivo',sans-serif; font-weight:700; color: var(--rust-2); font-size:1.1rem; }
+  .disc-card p{ font-size:0.85rem; color:#bcb5a3; margin-top:12px; }
+
+  /* ---------- HISTORY ---------- */
+  .history{ background: var(--bone); }
+  .history-grid{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap:60px; }
+  .history-grid img{ width:100%; height:460px; object-fit:cover; }
+  .history-grid p{ color:#4a4638; max-width:560px; }
+  .history-grid p + p{ margin-top:14px; }
+
+  /* ---------- BAND ---------- */
+  .band{ position:relative; height: 56vh; min-height:400px; background: var(--graphite); }
+  .band img{ width:100%; height:100%; object-fit:cover; opacity:0.92; }
+  .band-caption{ position:absolute; left:0; right:0; bottom:0; padding: 28px 0; background: linear-gradient(180deg, transparent, rgba(29,28,26,0.9)); }
+  .band-caption p{ color: var(--rust-2); font-weight:600; font-size:0.85rem; letter-spacing:0.06em; }
+
+  /* ---------- STRUCTURE / WAYS TO WIN ---------- */
+  .structure{ background: var(--bone); }
+  .structure-layout{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; }
+  .win-list{ display:flex; flex-direction:column; margin-top:10px; }
+  .win-row{ display:grid; grid-template-columns: 130px 1fr; gap:18px; padding:18px 0; border-top:1px solid var(--bone-2); }
+  .win-row:last-child{ border-bottom:1px solid var(--bone-2); }
+  .win-row .w-name{ font-family:'Archivo',sans-serif; font-weight:700; color:var(--rust); font-size:1rem; }
+  .win-row .w-desc{ color:#4a4638; font-size:0.92rem; }
+  .round-facts{ margin-top:10px; }
+  .round-facts .fact{ padding:16px 0; border-top:1px solid var(--bone-2); }
+  .round-facts .fact:last-child{ border-bottom:1px solid var(--bone-2); }
+  .round-facts .f-num{ font-family:'Archivo Black',sans-serif; color:var(--rust); font-size:1.6rem; }
+  .round-facts .f-desc{ color:#4a4638; font-size:0.92rem; margin-top:4px; }
+
+  /* ---------- GEAR ---------- */
+  .gear{ background: var(--steel); color:var(--bone); }
+  .gear .section-head h2{ color:#fff; }
+  .gear .lede{ color:#c9c2b2; }
+  .gear-layout{ display:grid; grid-template-columns: 0.85fr 1.15fr; gap:60px; align-items:center; margin-top:10px; }
+  .gear-layout img{ width:100%; height:480px; object-fit:cover; }
+  .gear-list dt{ font-family:'Archivo',sans-serif; font-weight:700; color:#fff; font-size:1.15rem; margin-top:24px; }
+  .gear-list dt:first-child{ margin-top:0; }
+  .gear-list dd{ color:#bcb5a3; margin-top:4px; max-width:460px; font-size:0.93rem; }
+
+  /* ---------- WEIGHT CLASSES ---------- */
+  .weights{ background: var(--bone); }
+  .weight-grid{ margin-top:44px; display:grid; grid-template-columns: repeat(4, 1fr); gap:1px; background: var(--bone-2); }
+  .weight-item{ background: var(--bone); padding: 22px 20px; }
+  .weight-item .w-title{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.02rem; }
+  .weight-item .w-lim{ color: var(--slate); font-size:0.82rem; margin-top:4px; }
+
+  /* ---------- GALLERY — two-column alternating, distinct from hockey (mosaic) and boxing (uniform 3-col) ---------- */
+  .gallery{ background: var(--graphite); }
+  .gallery .section-head h2{ color:#fff; }
+  .gallery .lede{ color:#c9c2b2; }
+  .gallery-grid{ margin-top:46px; display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .gallery-grid figure{ overflow:hidden; background:#000; }
+  .gallery-grid img{ width:100%; height:100%; object-fit:cover; transition: transform .5s ease; }
+  .gallery-grid a:hover img{ transform: scale(1.04); }
+  .gtall{ aspect-ratio: 4/5; }
+  .gwide{ aspect-ratio: 16/9; grid-column: span 2; }
+
+  /* ---------- TODAY ---------- */
+  .today{ background: var(--bone); }
+  .today-grid{ display:flex; flex-direction:column; margin-top:44px; }
+  .today-row{ display:grid; grid-template-columns: 230px 1fr; gap:30px; padding: 24px 0; border-top: 1px solid var(--bone-2); }
+  .today-row:last-child{ border-bottom: 1px solid var(--bone-2); }
+  .today-row .t-name{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.1rem; }
+  .today-row .t-detail{ color:#4a4638; max-width:560px; font-size:0.95rem; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background: var(--graphite); color: #a49c88; padding: 56px 0 34px; font-size:0.88rem; }
+  .footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; }
+  footer .brand{ margin-bottom:14px; color:#fff; }
+  footer .col h4{ color:#fff; font-size:0.8rem; font-weight:600; margin-bottom:10px; letter-spacing:0.05em;}
+  footer .col a{ display:block; color: #a49c88; text-decoration:none; margin-bottom:7px; }
+  footer .col a:hover{ color:#fff; }
+  .footer-bottom{
+    margin-top: 44px; padding-top: 22px; border-top:1px solid rgba(236,231,221,0.12);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:#6b6656;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    nav.links{ display:none; }
+    .nav-toggle{ display:block; }
+    .hero{ grid-template-columns: 1fr; }
+    .hero-img{ height: 280px; order:-1; }
+    .hero-text{ padding: 40px 28px; }
+    .intro-grid, .history-grid, .structure-layout, .gear-layout{ grid-template-columns: 1fr; gap:34px; }
+    .history-grid img{ height:260px; }
+    .disc-grid{ grid-template-columns: repeat(2, 1fr); }
+    .weight-grid{ grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid{ grid-template-columns: 1fr; }
+    .gwide{ grid-column: span 1; }
+    .today-row{ grid-template-columns: 1fr; gap:6px; }
+    .gear-layout img{ height:280px; order:-1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .gallery-grid img{ transition:none; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--rust); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <div class="brand"><span class="mark"></span> INSIDE THE CAGE</div>
+    <nav class="links">
+      <a href="#intro">The Sport</a>
+      <a href="#disciplines">Disciplines</a>
+      <a href="#history">History</a>
+      <a href="#structure">Rules</a>
+      <a href="#gear">Gear</a>
+      <a href="#today">Today</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-kicker">A GUIDE TO MIXED MARTIAL ARTS</p>
+    <h1 class="display">One cage. Every discipline.</h1>
+    <p class="hero-sub">Mixed martial arts brings striking, grappling, and submission fighting into a single contest. Here's how a sport built from a dozen older martial arts became one of the fastest-growing in the world.</p>
+    <div class="hero-figures">
+      <div><div class="num">3</div><div class="label">rounds in a standard bout</div></div>
+      <div><div class="num">5</div><div class="label">rounds in a title fight</div></div>
+      <div><div class="num">4</div><div class="label">ways a fight can end</div></div>
+      <div><div class="num">1993</div><div class="label">year the UFC held its first event</div></div>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1680022546558-550eaf22351e?auto=format&fit=crop&w=1200&q=80" alt="Two fighters standing inside an MMA cage before a bout">
+  </div>
+</section>
+
+<section class="intro" id="intro">
+  <div class="wrap intro-grid">
+    <div>
+      <div class="section-head">
+        <span class="tag">THE SPORT</span>
+        <h2>Not one martial art — all of them</h2>
+      </div>
+      <p class="lede">MMA fighters are judged on their ability to strike standing up, control an opponent against the cage, and finish a fight on the ground — three completely different skill sets in one bout.</p>
+      <p class="body-text">That range is what separates MMA from a single-discipline sport like boxing or judo. A fighter with excellent boxing but no takedown defence can be brought to the mat and neutralised; a champion wrestler with no submission skill can be caught in a choke the moment the fight hits the floor. Success depends on being dangerous everywhere, not just in one phase of the fight.</p>
+      <p class="body-text">Bouts happen inside a fenced enclosure — commonly called "the cage" or, in some promotions, the Octagon — rather than a roped ring, partly because the fence lets fighters strike or work off it without the risk of falling through the ropes.</p>
+    </div>
+    <div>
+      <img src="https://images.unsplash.com/photo-1680022702604-292f21514497?auto=format&fit=crop&w=900&q=80" alt="Two fighters standing next to each other inside an MMA cage" style="width:100%; height:520px; object-fit:cover;">
+    </div>
+  </div>
+</section>
+
+<section class="disciplines" id="disciplines">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" style="color:#e07a3f;">FOUNDATIONS</span>
+      <h2>The arts that built the sport</h2>
+      <p class="lede">Every top MMA fighter is really cross-training in several older combat sports, each contributing a different layer to the game.</p>
+    </div>
+    <div class="disc-grid">
+      <div class="disc-card">
+        <div class="d-name">Boxing</div>
+        <p>Hand striking, head movement, and footwork — the foundation of stand-up offence and defence.</p>
+      </div>
+      <div class="disc-card">
+        <div class="d-name">Muay Thai</div>
+        <p>Adds elbows, knees, and clinch fighting, widening the striking game beyond just punches.</p>
+      </div>
+      <div class="disc-card">
+        <div class="d-name">Wrestling</div>
+        <p>Takedowns and the ability to control where a fight happens — standing, against the cage, or on the mat.</p>
+      </div>
+      <div class="disc-card">
+        <div class="d-name">Brazilian Jiu-Jitsu</div>
+        <p>Ground control and submissions — chokes and joint locks that can end a fight without a single strike.</p>
+      </div>
+      <div class="disc-card">
+        <div class="d-name">Judo &amp; Sambo</div>
+        <p>Throws and off-balancing from a standing clinch, often used to bring a fight to the ground on a fighter's own terms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="history" id="history">
+  <div class="wrap history-grid">
+    <img src="https://images.unsplash.com/photo-1680022548963-1d8e630a272b?auto=format&fit=crop&w=900&q=80" alt="Two fighters standing on top of an MMA cage before a match">
+    <div>
+      <div class="section-head">
+        <span class="tag">ORIGINS</span>
+        <h2>From no-rules spectacle to regulated sport</h2>
+      </div>
+      <p>The modern sport traces back to 1993, when the UFC held its first event as a near-anything-goes tournament designed to answer a simple question: which fighting style wins in a real contest? Early events had almost no weight classes, rounds, or rule limits.</p>
+      <p>Royce Gracie, a Brazilian jiu-jitsu practitioner, won that first tournament and several after it, repeatedly submitting larger opponents and proving that ground fighting was as decisive as striking power — a result that reshaped how fighters trained from then on.</p>
+      <p>Facing bans in several U.S. states over safety concerns, the sport adopted the Unified Rules of Mixed Martial Arts in the early 2000s, introducing weight classes, timed rounds, banned strikes, and licensed referees, which is largely the rulebook still used today.</p>
+      <p>Since then, MMA has grown into a globally televised sport with promotions on every continent, and it remains one of the few major sports where a fighter's path to the top can run through wrestling mats, boxing gyms, and jiu-jitsu academies all at once.</p>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <img src="https://images.unsplash.com/photo-1682545888368-587f56efd06e?auto=format&fit=crop&w=1800&q=80" alt="Two fighters grappling on the ground during training">
+  <div class="band-caption"><div class="wrap"><p>MOST FIGHTS THAT GO TO THE GROUND ARE DECIDED BY POSITION AND CONTROL, NOT STRIKES</p></div></div>
+</div>
+
+<section class="structure" id="structure">
+  <div class="wrap structure-layout">
+    <div>
+      <div class="section-head">
+        <span class="tag">TIMING</span>
+        <h2>How a bout is structured</h2>
+      </div>
+      <p class="body-text" style="margin-bottom:6px;">Non-title fights run three five-minute rounds; championship bouts run five. A one-minute rest separates each round, and a fight can be stopped at any point if it's no longer competitive.</p>
+      <div class="round-facts">
+        <div class="fact"><div class="f-num">5 min</div><div class="f-desc">Length of each round, with a one-minute break between them.</div></div>
+        <div class="fact"><div class="f-num">10-9</div><div class="f-desc">The standard scorecard system, borrowed directly from boxing, used when a fight goes the distance.</div></div>
+        <div class="fact"><div class="f-num">3</div><div class="f-desc">Judges score every fight independently; a majority decides the winner on the cards.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-head">
+        <span class="tag">OUTCOMES</span>
+        <h2>How a fight actually ends</h2>
+      </div>
+      <div class="win-list">
+        <div class="win-row">
+          <div class="w-name">Knockout</div>
+          <div class="w-desc">A fighter is struck unconscious or unable to intelligently defend themselves.</div>
+        </div>
+        <div class="win-row">
+          <div class="w-name">Submission</div>
+          <div class="w-desc">A fighter taps out or verbally concedes rather than risk a choke or joint injury.</div>
+        </div>
+        <div class="win-row">
+          <div class="w-name">TKO / stoppage</div>
+          <div class="w-desc">A referee or ringside doctor ends the fight to prevent further unnecessary damage.</div>
+        </div>
+        <div class="win-row">
+          <div class="w-name">Decision</div>
+          <div class="w-desc">If the fight goes the distance, the judges' scorecards determine the winner.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gear" id="gear">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" style="color:#e07a3f;">EQUIPMENT</span>
+      <h2>Gear built for both hands and grips</h2>
+      <p class="lede">MMA gloves look nothing like boxing gloves, because fighters need to strike and grab in the same fight.</p>
+    </div>
+    <div class="gear-layout">
+      <img src="https://images.unsplash.com/photo-1615117972428-28de67cda58e?auto=format&fit=crop&w=900&q=80" alt="A fighter wearing open-fingered MMA gloves">
+      <dl class="gear-list">
+        <dt>Open-finger gloves</dt>
+        <dd>Padded at the knuckle but open at the fingers, typically 4–6oz, light enough to grip and grapple while still protecting the hand when striking.</dd>
+        <dt>Mouthguard</dt>
+        <dd>Required at every level, protecting the teeth and jaw from strikes at any range, standing or on the ground.</dd>
+        <dt>Groin protection &amp; shin guards</dt>
+        <dd>Worn under fight shorts; shin guards are standard in training but not used in professional competition.</dd>
+        <dt>Rash guard or gi (training only)</dt>
+        <dd>Used in jiu-jitsu and wrestling sessions to allow grips and drilling without skin-on-skin friction injuries.</dd>
+        <dt>The cage</dt>
+        <dd>A fenced, octagonal or hexagonal enclosure that keeps fighters in play against the perimeter rather than through open ropes.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="weights" id="weights">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">MATCHMAKING</span>
+      <h2>Weight classes</h2>
+      <p class="lede">As in boxing, fighters are matched by weight so that size doesn't decide a fight before it starts.</p>
+    </div>
+    <div class="weight-grid">
+      <div class="weight-item"><div class="w-title">Strawweight</div><div class="w-lim">up to 115 lb</div></div>
+      <div class="weight-item"><div class="w-title">Flyweight</div><div class="w-lim">up to 125 lb</div></div>
+      <div class="weight-item"><div class="w-title">Bantamweight</div><div class="w-lim">up to 135 lb</div></div>
+      <div class="weight-item"><div class="w-title">Featherweight</div><div class="w-lim">up to 145 lb</div></div>
+      <div class="weight-item"><div class="w-title">Lightweight</div><div class="w-lim">up to 155 lb</div></div>
+      <div class="weight-item"><div class="w-title">Welterweight</div><div class="w-lim">up to 170 lb</div></div>
+      <div class="weight-item"><div class="w-title">Middleweight</div><div class="w-lim">up to 185 lb</div></div>
+      <div class="weight-item"><div class="w-title">Light heavyweight</div><div class="w-lim">up to 205 lb</div></div>
+      <div class="weight-item"><div class="w-title">Heavyweight</div><div class="w-lim">up to 265 lb</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" style="color:#e07a3f;">GALLERY</span>
+      <h2>Inside the cage</h2>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gwide">
+        <a href="https://unsplash.com/photos/a-couple-of-men-standing-on-top-of-a-wrestling-ring-2tZL1FnsC48" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1680022546558-550eaf22351e?auto=format&fit=crop&w=1200&q=80" alt="Two fighters inside an MMA cage before a bout">
+        </a>
+      </figure>
+      <figure class="gtall">
+        <a href="https://unsplash.com/photos/a-couple-of-men-standing-next-to-each-other-in-a-cage-wEvO6fsQiG4" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1680022702604-292f21514497?auto=format&fit=crop&w=700&q=80" alt="Two fighters standing next to each other in a cage">
+        </a>
+      </figure>
+      <figure class="gtall">
+        <a href="https://unsplash.com/photos/a-couple-of-men-standing-on-top-of-each-other-in-a-gym-vQnlu9EUBDo" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1682545888368-587f56efd06e?auto=format&fit=crop&w=700&q=80" alt="Two fighters grappling on the ground in training">
+        </a>
+      </figure>
+      <figure class="gtall">
+        <a href="https://unsplash.com/photos/man-in-black-and-red-boxing-gloves-CcJpFWrXlb8" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1615117972428-28de67cda58e?auto=format&fit=crop&w=700&q=80" alt="A fighter wearing open-fingered MMA gloves">
+        </a>
+      </figure>
+      <figure class="gtall">
+        <a href="https://unsplash.com/photos/a-couple-of-men-standing-on-top-of-a-wrestling-ring-iw73pbcJyg4" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1680022548963-1d8e630a272b?auto=format&fit=crop&w=700&q=80" alt="Two fighters standing on top of an MMA cage"></a>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="today" id="today">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">TODAY</span>
+      <h2>Where the sport lives now</h2>
+    </div>
+    <div class="today-grid">
+      <div class="today-row">
+        <div class="t-name">Major promotions</div>
+        <div class="t-detail">The UFC remains the largest organisation, but Bellator, ONE Championship, and the PFL each run global cards with their own rankings and champions.</div>
+      </div>
+      <div class="today-row">
+        <div class="t-name">Amateur &amp; regional circuits</div>
+        <div class="t-detail">A dense network of amateur shows and regional promotions functions as the sport's minor leagues, where most fighters build a record before signing with a major organisation.</div>
+      </div>
+      <div class="today-row">
+        <div class="t-name">Gym culture</div>
+        <div class="t-detail">MMA gyms typically run separate classes in boxing, wrestling, and jiu-jitsu, and most members attend purely for fitness and self-defence rather than competition.</div>
+      </div>
+      <div class="today-row">
+        <div class="t-name">Women's MMA</div>
+        <div class="t-detail">Now a full part of every major promotion's schedule, with its own weight divisions and champions since the UFC introduced women's fights in 2013.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="brand display" style="font-size:1.05rem;">INSIDE THE CAGE</div>
+      <p style="max-width:280px; color:#6b6656;">An independent, informational guide to mixed martial arts — its history, rules, and the disciplines it's built from.</p>
+    </div>
+    <div class="col">
+      <h4>ON THIS PAGE</h4>
+      <a href="#intro">The Sport</a>
+      <a href="#disciplines">Disciplines</a>
+      <a href="#history">History</a>
+    </div>
+    <div class="col">
+      <h4>MORE</h4>
+      <a href="#structure">Rules</a>
+      <a href="#gear">Gear</a>
+      <a href="#today">Today</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>Photography via Unsplash, used under the Unsplash License.</span>
+    <span>Built as an educational reference — not affiliated with the UFC or any promotion.</span>
+  </div>
+</footer>
+
+</body>
+</html>
